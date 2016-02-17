@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+	
+	<form action='/profile' method='POST'>
+		
+
+		<div class='row'>
+			<div class='col-md-offset-5'>	
+				<h1>Profile</h1>
+			</div>
+		
+		</div>
+
+
+		<div class='col-md-8 col-md-offset-2'>
+		<table class='table'>
+			<tr>
+				<th>Roll Number</th>
+				<td>{{ s.roll_number }}</td>
+
+			</tr>
+			<tr>
+				<th>Name</th>
+				<td>{{ s.student_name }}</td>
+			</tr>
+			<tr>
+				<th>Branch</th>
+				<td>{{ s.branch }}</td>
+
+			</tr>
+	<tr>
+				<th>Semester</th>
+				<td>{{ s.sem }}</td>
+
+			</tr>
+	<tr>
+				<th>Fine</th>
+				<td>{{ s.due_fine }}</td>
+
+			</tr>
+	<tr>
+				<th>Date Of Birth</th>
+				<td>{{ s.dob }}</td>
+
+			</tr>
+
+			<tr>
+				<th>Phone</th>
+				<td>{{ s.phone }}</td>
+
+			</tr>
+
+			<tr>
+				<th>Address</th>
+				<td>{{ s.address }}</td>
+
+			</tr>
+
+			<tr>
+				<th>Books Issued</th>
+				<td>
+				{% for book in books %}
+					{{ book.book_name }},
+				{% endfor %}
+				</td>
+			</tr>
+			
+
+		</table>
+		</div>
+	
+	</form>
+
+
+
+</div>
+{% endblock %}

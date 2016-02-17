@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+{% if request.method == 'GET' %}
+	<form action='' method='POST'>
+		{% csrf_token %}
+		<div class='col-md-2'>
+		</div>
+
+		<div class='col-md-8'>
+			<div class='row'>
+				<div class='col-md-offset-4 col-sm-offset-4 col-xs-offset-3'>
+					<h1>Search Students</h1>
+				</div>
+			</div>
+		
+			<br>
+			<br>
+
+			<div class='row'>
+				<div class='col-md-10'>{{ idform.r_no }}</div>
+				<div class='col-md-2'><input type="submit" value="Search" class='btn btn-default'/></div>
+			</div>
+			<br>
+			<div class='row'><div class='col-md-offset-5'>OR</div></div>	
+			
+			<br>
+			
+			<div class='row'>
+				<div class='col-md-5'>{{ depform.sem }}</div>
+				<div class='col-md-5'>{{ depform.dep_book }}</div>
+				<div class='col-md-2'><input type='submit' value='Search' class='btn btn-default'/></div>
+			</div>
+			<br>
+			<div class='row'><div class='col-md-offset-5'>OR</div></div>	
+			
+			<br>
+
+			<div class='row'>
+				<div class='col-md-10'>{{ nameform.student_name }}</div>
+				<div class='col-md-2'><input type='submit' value='Search' class='btn btn-default' /></div>
+			</div>
+		
+			<br>
+
+
+
+			<div class='row'>
+				<div class='col-md-offset-5 col-sm-offset-4'>
+				</div>
+			</div>
+		</div>
+
+		<div class='col-md-2'>
+		</div>
+
+	</form>
+{% elif request.method == 'POST' %}
+		{% if s %}
+
+		{% csrf_token %}
+		<div class='col-md-6'>
+		<h1>Student Results:</h1>
+		<table class='table'>
+			<tr>
+				<th>Roll Number:</th>
+				<td>{{ s.roll_number }}</td>
+			</tr>
+			<tr>
+				<th>Name:</th>
+				<td>{{ s.student_name }}</td>
+			</tr>
+			<tr>
+				<th>Branch:</th>
+				<td>{{ s.branch }}</td>
+			</tr>
+			<tr>
+				<th>Semester:</th>
+				<td>{{ s.sem }}</td>
+			</tr>
+			<tr>
+				<th>Fine Due:</th>
+				<td>{{ s.due_fine }}</td>
+			</tr>
+			
+		</table>
+		</div>
+		<div class='col-md-6'>
+		<br><br><br>
+			<table class='table'>
+				<tr>
+					<th>Books Issued:</th>
+				</tr>
+				{% for book in books %}
+					<tr>
+						<td>{{ forloop.counter }}. {{ book.book_name }}</td>
+					</tr>
+				{% endfor %}
+				
+
+			</table>
+		</div>
+		{% endif %}
+
+	{% if s_dep %}
+		{% csrf_token %}
+		<div class='col-md-12'>
+		<h1>Student Results:</h1>
+		<table class='table'>
+			<tr>
+				<th>Roll Number</th>
+				<th>Name</th>
+				<th>Books Issued</th>
+				<th>Due Fine</th>
+			</tr>
+			{% for s in s_dep %} 
+			<tr>
+				<td>{{ s.0.roll_number }}</td>
+				<td>{{ s.0.student_name }}</td>
+				<td>
+					{% for book in s.1 %}
+						{{ book.book_name }},
+					{% endfor %}
+				</td>
+				<td>{{ s.0.due_fine }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+		</div>
+			
+	{% endif %}
+	{% if list_st %}
+		{% csrf_token %}
+		<div class='col-md-12'>
+		<h1>Student Results:</h1>
+		<table class='table'>
+			<tr>
+				<th>Roll Number</th>
+				<th>Name</th>
+				<th>Books Issued</th>
+				<th>Due Fine</th>
+			</tr>
+			{% for s in list_st %} 
+			<tr>
+				<td>{{ s.0.roll_number }}</td>
+				<td>{{ s.0.student_name }}</td>
+				<td>
+					{% for book in s.1 %}
+						{{ book.book_name }},
+					{% endfor %}
+				</td>
+				<td>{{ s.0.due_fine }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+		</div>
+			
+	{% endif %}
+
+
+
+{% endif %}
+</div>
+{% endblock content %}

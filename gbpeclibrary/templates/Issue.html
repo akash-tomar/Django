@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+
+	{% if limit %}
+		<h1>Max no of books already issued.</h1>
+	{% endif %}
+
+	{% if claim %}
+		<h1>This book is cannot be issued as it is claimed to someone else.</h1>
+	{% endif %}
+
+
+	{% if issued %}
+		<div class='col-md-2'></div>
+
+		<div class='col-md-8'>
+		<div class='row'>
+			<div class='col-md-offset-4'>
+			<h1>Book Issued</h1>
+			</div>
+		</div>
+			<table class='table table-bordered jumbotron'>
+				<tr>
+					<th>Id</th>
+					<td>{{ b.book_id }}</td>
+				</tr>
+				<tr>
+					<th>Book Name</th>
+					<td>{{ b.book_name }}</td>
+				</tr>
+				<tr>
+					<th>Student Name</th>
+					<td>{{ s.student_name }}</td>
+				</tr>
+				<tr>
+					<th>Date of Issue</th>
+					<td>{{ b.date_of_issue }}</td>
+				</tr>
+				<tr>
+					<th>Return Date</th>
+					<td>{{ b.return_date }}</td>
+				</tr>
+
+			</table>
+		</div>
+
+		<div class='col-md-2'></div>
+
+	{% endif %}
+	
+	{% if returned %}
+	<div class='col-md-2'></div>
+
+		<div class='col-md-8'>
+		<div class='row'>
+			<div class='col-md-offset-4'>
+			<h1>Book Returned</h1>
+			</div>
+		</div>
+			<table class='table table-bordered jumbotron'>
+				<tr>
+					<th>Id</th>
+					<td>{{ b.book_id }}</td>
+				</tr>
+				<tr>
+					<th>Book Name</th>
+					<td>{{ b.book_name }}</td>
+				</tr>
+				<tr>
+					<th>Date of Issue</th>
+					<td>{{ doi }}</td>
+				</tr>
+				<tr>
+					<th>Return Date</th>
+					<td>{{ rd }}</td>
+				</tr>
+				<tr>
+					<th>Student Name</th>
+					<td>{{ s.student_name }}</td>
+				</tr>
+				<tr>
+					<th>Fine(if any):</th>
+					<td>
+						{{ fine }}
+					</td>
+										  
+				</tr>
+
+			</table>
+		</div>
+
+		<div class='col-md-2'></div>
+
+
+
+{% elif issueForm %}
+	<div class='row'>
+	<div class='col-md-4'></div>
+	<div class='col-md-4'>
+	<form action="/issue/" method="post">
+    		{% csrf_token %}
+    
+   		 {{ issueForm }}
+
+		    <input type='hidden' name='bar_code' value='{{ bar_code }}'/>
+<br>
+	</form>
+	</div>
+	<div class='col-md-4'></div>
+	</div>
+	{% elif cannot_be_issued %}
+	
+		<div class='row'>
+		<div class='col-md-4'></div>
+
+		<div class='col-md-4'>
+		<h1>Book Cannot be Issued.</h1>
+		</div>
+
+		<div class='col-md-4'></div>
+		</div>
+
+
+	{% endif %}
+
+</div>
+{% endblock %}

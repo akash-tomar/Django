@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+<h1>List of books</h1>
+	<table class='table table-condensed'>
+	<tr>
+		<th>Book Name</th>
+		<th>Authors</th>
+		<th>Quantity</th>
+		<th>Available</th>
+	</tr>
+	{% for book in books %}
+		<tr>
+			<td>{{ book.0 }}</td>
+
+			<td>
+				{% for a in book.2 %}
+					{{ a.author_name }},
+
+				{% endfor %}
+			</td>
+			<td>{{ book.1 }}</td>
+
+			<td>{{ book.3 }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+<br><br>
+
+<div class='row'>
+	<div class='col-md-3'>
+		<nav>
+		<ul class='pager'>
+
+			
+			{% if b.has_previous %}
+				<li class='previous'><a href="?page={{ b.previous_page_number }}"><span aria-hidden='true'>&larr;</span>Previous</a></li>
+			{% endif %}
+
+			<li class='previous'><span class='current'>
+				
+				Page {{ b.number }} of {{ b.paginator.num_pages }}.
+
+			</span></li>
+
+			{% if b.has_next %}
+
+				<li class='previous'><a href="?page={{ b.next_page_number }}">Next<span aria-hidden='true'>&larr;</span></a></li>
+
+			{% endif %}
+
+
+
+		</ul>
+		</nav>
+	</div>
+	<div class='col-md-7'></div>
+	<div class='col-md-2'>
+		<nav>
+
+			<ul class='pager'>
+
+				<li class='previous'><span class='current'>
+				
+				    Items {{ b.start_index }} to {{ b.end_index }} of {{ b.paginator.count }}.</span></li>
+
+			</ul>
+		</nav>
+
+	</div>
+</div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+	{% if request.method == 'GET' %}
+		<form action='' method='POST'>
+			{% csrf_token %}
+			<div class='col-md-3'>
+			</div>
+
+			<div class='col-md-6'>
+				<div class='row'>
+					<div class='col-md-offset-4 col-sm-offset-4'>
+						<h1>Search Author</h1>
+					</div>
+				</div>
+			
+				<br>
+				<br>
+
+				<div class='row'>
+					<div class='col-md-12'>{{ form.author_name }}</div>
+				</div>
+			
+				<br>
+<!--
+				<div class='row'>
+					<div class='col-md-offset-5 col-sm-offset-4'>
+	   			 		<input type="submit" value="Submit" class='btn btn-default'/>
+					</div>
+				</div>
+				-->
+			</div>
+
+			<div class='col-md-3'>
+			</div>
+
+		</form>
+	{% elif request.method == 'POST' %}
+			{% csrf_token %}
+			
+			<div class='col-md-2'></div>
+			
+			<div class='col-md-8'>
+				<div class='row'>
+					<div class='col-md-offset-3'>
+						<h1>List of Books by Authors</h1>
+						<br>
+					</div>
+				</div>
+			
+				<div class='panel panel-default'>
+					{% for item in list_auth %}
+					<div class='list-group'>
+						<div class='list-group-item active'>
+							<h3>List of Books by: {{ item.0.author_name }}</h3>
+						</div>
+						<table class='table jumbotron'>
+						{% for book in item.1 %}
+							<tr>
+								<td>{{ book.book_name }}</td>
+								<th>Quantity-</th>
+								<td>{{ book.qty }}</td>
+							</tr>
+						{% endfor %}
+						</table>
+							
+					</div>
+					{% endfor %}
+
+				</div>
+			</div>
+			
+			
+			<div class='col-md-2'></div>
+			
+			<div class='col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3'>
+				<div class='row'>
+				<br>
+					<div class='col-md-offset-2'>
+					{% if list_auth|length == 0 %}
+						<h1>No books by this author yet.</h1>
+					{% endif %}
+					</div>
+				</div>
+			</div>
+
+			
+	{% endif %}
+</div>
+{% endblock content %}

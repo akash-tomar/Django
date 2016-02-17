@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+{% if form %}
+<form action='/deleteBook/' method='POST'>
+	{% csrf_token %}
+	<div class='col-md-3'>
+	</div>
+
+	<div class='col-md-6'>
+		<div class='row'>
+			<div class='col-md-offset-4 col-xs-offset-2'>
+				<h1>Delete Book</h1>
+			</div>
+		</div>
+		
+		<br>
+		<br>
+		<div class='row'>
+			<div class='col-md-12'>{{ form.idi }}</div>
+		</div>
+		
+		<br>
+<!--
+		<div class='row'>
+			<div class='col-md-offset-5 col-sm-offset-4'>
+   			 	<input type="submit" value="Submit" class='btn btn-default'/>
+			</div>
+		</div>
+-->
+	</div>
+
+	<div class='col-md-3'>
+	</div>
+
+</form>
+{% endif %}
+
+{% if deleted %}
+	<h1>Book has been deleted.</h1>
+{% endif %}
+	
+{% if not_deleted %}
+	<h1>This Book cannot be deleted.</h1>
+{% endif %}
+</div>
+{% endblock %}

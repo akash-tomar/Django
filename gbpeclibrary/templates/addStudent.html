@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+{% if request.method == 'GET' %}
+<form action = '' method='POST'>
+	{% csrf_token %}
+
+
+	<div class='col-md-3'>
+	</div>
+
+	<div class='col-md-6'>
+		<div class='row'>
+			<div class='col-md-offset-4 col-xs-offset-2'>
+				<h1>Add Student</h1>
+			</div>
+		</div>
+		
+		<br>
+		<br>
+		<div class='row'>
+			<div class='col-md-12'>{{ form.roll_number }}</div>
+		</div>
+		
+		<br>
+		<div class='row'>
+			<div class='col-md-12'>
+				{{ form.username }}
+			</div>
+		</div>
+		<br>
+
+		<div class='row'>
+			<div class='col-md-12'>{{ form.student_name }}</div>
+		</div>
+		
+		<br>
+		<div class='row'>
+			<div class='col-md-12'>{{ form.email }}</div>
+		</div>
+		
+		<br>
+
+
+
+		<div class='row'>
+			<div class='col-md-6'>{{ form.branch }}</div>
+
+			<div class='col-md-6'>{{ form.sem }}</div>
+		</div>
+		
+		<br>
+
+		<div class='row'>
+	               			<div class='col-md-6'>
+				<label for="password" class="sr-only">Password</label><input type="password" id="password" name = 'password' class="form-control" placeholder="Password" required>
+			
+			</div>
+			<div class='col-md-6'>
+				 <label for="cpassword" class="sr-only">Confirm Password</label><input type="password" id="cpassword" name = 'cpassword' class="form-control" placeholder="Confirm Password" required>
+
+			</div>
+		</div>
+		
+		<br>
+
+		
+		<br>
+
+		<div class='row'>
+			<div class='col-md-offset-5 col-sm-offset-4'>
+   			 	<input type="submit" value="Submit" class='btn btn-default'/>
+			</div>
+		</div>
+	</div>
+
+	<div class='col-md-3'>
+	</div>
+</form>
+{% endif %}
+
+{% if request.method  == 'POST' %}
+	{% if s %}
+	<div class='row'>
+	<div class='col-md-8 col-md-offset-2'>
+		<table class='table table-hover jumbotron'>
+			<tr>
+				<th>Roll Number</th>
+				<td>{{ s.roll_number }}</td>
+			</tr>
+			<tr>
+				<th>Name</th>
+				<td>{{ s.student_name }}</td>
+			</tr>
+			<tr>
+				<th>Branch</th>
+				<td>{{ s.branch }}</td>
+			</tr>
+			<tr>
+				<th>Semester</th>
+				<td>{{ s.sem }}</td>
+			</tr>
+			<tr>
+				<th>Email ID</th>
+				<td>{{ s.email }}</td>
+			</tr>
+
+		</table>
+	</div>
+	</div>
+	<div class='row'>
+		<div class='col-md-11 col-md-offset-5'>
+		<form action='/addStudent' method='GET'>
+			<input type='submit' value='Add More' class='btn btn-default'>
+		</form>
+		</div>
+	</div>
+	{% endif %}
+{% if failed %}
+	<h1>Student addition failed</h1>
+{% endif %}
+
+{% endif %}
+
+</div>
+{% endblock %}

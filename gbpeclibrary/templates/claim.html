@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+	{% if available %}
+		<h1>This Book is already available in the library.</h1>
+	{% endif %}
+
+	{% if no_claim %}
+		<h1>This book cannot be claimed. Please contact librarian.</h1>
+	{% endif %}
+	
+	{% if claim %}
+		<h1>You have claimed this book. You will be notified before 2 days of arrival of the book in the library.</h1>
+	{% endif %}
+
+</div>
+{% endblock %}

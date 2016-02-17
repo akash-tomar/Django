@@ -1,0 +1,15 @@
+body {
+
+	height:100vh;
+	background-size: cover;
+    	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+.homebg {
+	background: url('../img/logo.jpg') no-repeat fixed center;
+}
+
+.addbookbg {
+	background:url('../img/logo.jpg') no-repeat fixed bottom;
+}
+

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+	{% if request.method == 'GET' %}
+	<div class='row'>
+			<div class='col-md-2'></div>
+
+			<div class='col-md-8'>
+			<div class='col-md-offset-5 col-sm-offset-4 col-xs-offset-3'><h1>Re Issue</h1></div>
+			</div>
+
+			<div class='col-md-2'></div>
+	</div>
+
+	<div class='row'>
+		<br>
+			<div class='col-md-3 col-xs-4'>
+			</div>
+			<div class='col-md-6 col-xs-4'>
+				<form action='' method='POST'>
+					{% csrf_token %}
+					<div class='row'>
+						{{ form.code }}
+					</div>
+					<!--
+					<br>
+					<div class='row'>
+						<div class='col-md-offset-5 col-sm-offset-4'>
+							<button type="submit" class="btn btn-default">Submit</button>
+						</div>
+					</div>-->
+				</form>
+			</div>
+			<div class='col-md-3 col-xs-4'>
+			</div>
+	</div>
+	{% endif %}
+
+	{% if request.method == 'POST' %}
+		{% if reissued %}
+			
+			<div class='row col-mid-offset-5'><h1>Book Reissue</h1></div>
+			<table class='table'>
+				<tr>
+					<th>Book</th>
+					<td>{{ b.book_name }}</td>
+
+				</tr>
+				<tr>
+					<th>Issue Date</th>
+					<td>{{ b.date_of_issue }}</td>
+				</tr>
+				<tr>
+					<th>Return Date</th>
+					<td>{{ b.return_date }}</td>
+				</tr>
+				<tr>
+					<th>Fine</th>
+					<td>{{ fine }}</td>
+				</tr>
+
+
+			</table>
+
+
+		{% elif not reissued %}
+		<div class='row col-md-offset-5'>
+			<h1>This Book cannot be reissued. Contact librarian.</h1>
+		</div>
+		{% endif %}
+
+
+	{% endif %}
+
+
+</div>
+{% endblock %}

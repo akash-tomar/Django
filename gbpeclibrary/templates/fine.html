@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+{% if request.method == 'GET' %}
+	<div class='row'>
+		<div class='col-md-4'></div>
+		<div class='col-md-4'><div class='col-md-offset-2'><h1>Fine Manager</h1></div></div>
+		<div class='col-md-4'></div>
+	</div>
+	<br><br><br>	
+	<div class='col-md-3'></div>
+
+	<div class='col-md-6'>
+		<form action='/fine/' method='POST'>
+			{% csrf_token %}
+			<div class='row'>{{ form.r_no }}</div>
+			<!--
+			<br>
+			<div class='row'><input type='submit' value='Submit' class='btn btn-default col-md-offset-5'/></div>-->
+		</form>
+	</div>
+
+	<div class='col-md-3'></div>
+{% endif %}
+
+{% if request.method == 'POST' %}
+
+	{% if fineform %}
+		{% csrf_token %}
+		<div class='col-md-3'></div>
+
+		<div class='table-responsive col-md-6'>
+		
+			<table class='table'>
+				<tr>
+					<th>Roll number:</th>
+					<td>{{ s.roll_number }}</td>
+				</tr>
+
+				<tr>
+					<th>Name:</th>
+					<td>{{ s.student_name }}</td>
+				</tr>
+
+				<tr>
+					<th>Branch:</th>
+					<td>{{ s.branch }}</td>
+				</tr>
+
+				<tr>
+					<th>Semester:</th>
+					<td>{{ s.sem }}</td>
+				</tr>
+
+				<tr>
+					<th>Due fine:</th>
+					<td>{{ s.due_fine }}</td>
+				</tr>
+			</table>
+		</div>
+		<div class='row'>
+		<div class='col-md-4'></div>
+		<form action='/fine/' method='POST' class='col-md-4'>
+			{% csrf_token %}
+			<input type='hidden' name='student' value='{{ s.roll_number }}'/>
+			{{ fineform.fine }}
+			<br>
+			<input type='submit' value='Pay' class='btn btn-default col-md-offset-5'/>
+		</form>
+		<div class='col-md-4'></div>
+		</div>
+	{% endif %}
+
+
+	{% if st %}
+	<div class='row col-md-offset-4'>
+		<h1>Fine Paid Successfully.</h1>
+	</div>
+	<br><br>
+		<div class='col-md-3'></div>
+		<div class='table-responsive col-md-6'>
+		
+			<table class='table'>
+				<tr>
+					<th>Roll number:</th>
+					<td>{{ st.roll_number }}</td>
+				</tr>
+
+				<tr>
+					<th>Name:</th>
+					<td>{{ st.student_name }}</td>
+				</tr>
+
+				<tr>
+					<th>Branch:</th>
+					<td>{{ st.branch }}</td>
+				</tr>
+
+				<tr>
+					<th>Semester:</th>
+					<td>{{ st.sem }}</td>
+				</tr>
+
+				<tr>
+					<th>Due fine:</th>
+					<td>{{ st.due_fine }}</td>
+				</tr>
+			</table>
+		</div>
+		<div class='col-md-3'></div>
+	{% endif %}
+
+{% endif %}
+
+</div>
+{% endblock %}

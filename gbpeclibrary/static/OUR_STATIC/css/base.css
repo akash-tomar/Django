@@ -1,0 +1,41 @@
+
+body {
+	font-family: "Times New Roman", Times, serif;
+}
+
+
+
+.elementakash {
+	position:relative;
+	top:15%;
+	transform:translateY(-50%);
+}
+
+
+#blah>h1 {
+	font-size:48px;
+	color:#337AAA;
+}
+
+#help {
+	text-align:center;
+}
+
+#under {
+	text-decoration:underline;
+}
+#footer {
+	height:50px;
+	       background-color:yellow;
+}
+#test {
+	background-color:#292929;
+	height:250px;
+}
+#left > h4,h5,h6 {
+	color:#DBD2E2;
+}
+#right > h4,h5,h6 {
+	color:#DBD2E2;
+}
+

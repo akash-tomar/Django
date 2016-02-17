@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% block bgimg %}class='addbookbg'{% endblock %}
+{% block navbarproperty %}class='navbar navbar-inverse'{% endblock %}
+{% block content %}
+<div class='container'>
+{% if request.method == 'GET' %}
+	<form action='' method='POST'>
+		{% csrf_token %}
+		<div class='col-md-2'>
+		</div>
+
+		<div class='col-md-8'>
+			<div class='row'>
+				<div class='col-md-offset-4 col-sm-offset-4 col-xs-offset-3'>
+					<h1>Search Books</h1>
+				</div>
+			</div>
+		
+			<br>
+			<br>
+
+			<div class='row'>
+				<div class='col-md-10'>{{ idform.idi }}</div>
+				<div class='col-md-2'><input type='submit' value='Search' class='btn btn-deafult' /></div>
+			</div>
+			
+			<br>
+			<div class='row'><div class='col-md-offset-5'>OR</div></div>	
+			
+			<br>
+			
+			<div class='row'>
+				<div class='col-md-10'>{{ depform.dep_book }}</div>
+				<div class='col-md-2'><input type='submit' value='Search' class='btn btn-deafult' /></div>
+			</div>
+		
+			<br>
+			<div class='row'><div class='col-md-offset-5'>OR</div></div>	
+				
+			<br>
+			<div class='row'>
+				<div class='col-md-10'>{{ nameform.book_name }}</div>
+				<div class='col-md-2'><input type='submit' value='Search' class='btn btn-deafult' /></div>
+			</div>
+		
+			<br>
+			
+
+		</div>
+
+		<div class='col-md-2'>
+		</div>
+
+	</form>
+{% elif request.method == 'POST' %}
+	{% if book %}	
+		{% csrf_token %}
+		<div class='col-md-6'>
+		<h2>Book Results:</h2>
+		<table class='table'>
+			<tr>
+				<th>ID:</th>
+				<td>{{ book.book_id }}</td>
+			</tr>
+			<tr>
+				<th>Book Name:</th>
+				<td>{{ book.book_name }}</td>
+			</tr>
+			<tr>
+				<th>Authors:</th>
+				<td>
+					{% for a in auths %}
+						{{ a.author_name }},
+					{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<th>Publisher:</th>
+				<td>
+					{{ pub.publisher_name }}
+				</td>
+			</tr>
+			<tr>
+				<th>Edition:</th>
+				<td> {{ book.edition_of_book }} </td>
+			</tr>
+			<tr>
+				<th>Department:</th>
+				<td>{{ book.dep_book }}</td>
+			</tr>
+			<tr>
+				<th>Shelf address:</th>
+				<td>{{ book.placed_at_shelf }}</td>
+			</tr>
+			{% if book.is_issued %}
+			<tr>
+				<th>Issued to:</th>
+				<td>{{ book.student }}</td>
+			</tr>
+			<tr>
+				<th>Issued on:</th>
+				<td>{{ book.date_of_issue }}</td>
+			</tr>
+			<tr>
+				<th>Return by:</th>
+				<td>{{ book.return_date }}</td>
+			</tr>
+			{% endif %}
+		</table>
+
+		<form action='/claim/' method='POST'>
+			{% csrf_token %}
+			<input type='submit' value='Claim' class='btn btn-info'/>
+			<input type='hidden' name='book_id' value='{{ book.book_id  }}'/>
+		</form>
+		</div>
+		<div class='col-md-6'>
+		<br><br><br>
+			<table class='table'>
+				<tr>	
+					<th>Past Book Record</th>
+				</tr>
+				
+				<tr>
+					<th>S.no</th>
+					<th>Student</th>
+					<th>Issued on</th>
+					<th>Returned on</th>
+				</tr>
+
+				<tr>
+					<th>1.</th>
+					<td>{{ lfi.one_st }}</td>
+					<td>{{ lfi.issue_one_date }}</td>
+					<td>{{ lfi.return_one_date }}</td>
+				</tr>
+
+				<tr>
+					<th>2.</th>
+					<td>{{ lfi.two_st }}</td>
+					<td>{{ lfi.issue_two_date }}</td>
+					<td>{{ lfi.return_two_date }}</td>
+				</tr>
+
+				<tr>	
+					<th>3.</th>
+					<td>{{ lfi.three_st }}</td>
+					<td>{{ lfi.issue_three_date }}</td>
+					<td>{{ lfi.return_three_date }}</td>
+				</tr>
+
+				<tr>	
+					<th>4.</th>
+					<td>{{ lfi.four_st }}</td>
+					<td>{{ lfi.issue_four_date }}</td>
+					<td>{{ lfi.return_four_date }}</td>
+				</tr>
+
+
+				<tr>	
+					<th>5.</th>
+					<td>{{ lfi.five_st }}</td>
+					<td>{{ lfi.issue_five_date }}</td>
+					<td>{{ lfi.return_five_date }}</td>
+				</tr>
+			</table>
+		</div>
+
+		
+	{% elif list %}	
+		{% csrf_token %}
+		<div class='col-md-1'></div>
+		<div class='col-md-10'>
+		<div class='row'>
+		<div class='col-md-offset-4'>
+		<h1>Book Results:</h1>
+		</div>
+		</div>
+		<table class='table'>
+			<tr>
+				<th>Book Name</th>
+				<th>Authors</th>
+				<th>Quantity</th>
+				<th>Available</th>
+				<th></th>
+			</tr>
+
+			{% for l in list %}
+				<tr>
+					<td>{{ forloop.counter }}. {{ l.0 }}</td>
+					<td>
+						{% for a in l.2 %}
+							{{ a.author_name }},
+
+						{% endfor %}
+					</td>
+					<td>{{ l.1 }}</td>
+					<td>{{ l.3 }}</td>
+
+					<td>
+						<form action='/claim/' method='POST'>
+							{% csrf_token %}
+							<input type='submit' class='btn btn-info' value='claim'/>
+							<input type='hidden' name='q_id' value='{{ l.4  }}'/>
+						</form>
+					</td>
+				</tr>
+				
+			{% endfor %}
+		
+		</table>
+		</div>
+		<div class='col-md-1'></div>
+
+
+	{% elif listb %}	
+		{% csrf_token %}
+		<div class='col-md-12'>
+		<div class='row'>
+		<div>
+		<h1>Book Results:</h1>
+		<br>
+		</div>
+		</div>
+		<table class='table'>
+			{% for l in listb %}
+				<tr><td>{{ forloop.counter }}.  {{ l }}</td></tr>
+			{% endfor %}
+		</ul>
+		</div>
+
+
+	{% else %}
+		<div class='row'>
+			<div>
+				<h1>No books found</h1>
+			</div>
+		</div>
+	{% endif %}
+
+
+
+{% endif %}
+</div>
+{% endblock content %}
